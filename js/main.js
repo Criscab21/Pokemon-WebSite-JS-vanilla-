@@ -6,6 +6,7 @@ const mainHtml = document.querySelector(".main");
 const pokemonCatched = document.querySelector(".pokemon_catched");
 const mainCatched = document.querySelector(".main_catched");
 const btnShowCatched = document.querySelector(".show_catched");
+const containerCatched = document.querySelector(".container-catched");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 
 //variables globales
@@ -44,21 +45,24 @@ const whichDelete = (id) => {
 //Creacion de cartas de pokemon atrapados tambien con la logica de los botones creados.
 
 const createCardsCatched = (pokemonData) => {
-    const cards = document.createElement("div");
+    
+    const cards = document.createElement("div");    
     const img = document.createElement("img");
-    const buttonDelete = document.createElement("button");    
+    const buttonDelete = document.createElement("button");
+    const p = document.createElement("p");
     buttonDelete.innerText = "Liberar";    
     buttonDelete.addEventListener("click", () => {
         localStorage.setItem("cant", checkCantStorage() - 1)                 
         whichDelete(pokemonData.id);
         printCatched();
     })                
-    cards.innerHTML = `nombre: ${pokemonData.name}`;                
+    p.innerHTML = `${pokemonData.name}`;                
     cards.className = "pokemon_card";
-    img.src = pokemonData.sprites.front_default;
+    img.src = pokemonData.sprites.other["official-artwork"].front_default;
+    cards.appendChild(p);
     cards.appendChild(img);
     cards.appendChild(buttonDelete);
-    mainCatched.appendChild(cards);
+    containerCatched.appendChild(cards);
 }
 
 
@@ -100,8 +104,8 @@ const printPokemon = (id) => {
         .then(res => res.json())
         .then(data => { 
             const pokemon = data;                                               
-            nameCard.innerText = `nombre: ${pokemon.name}`;
-            imgDiv.src = pokemon.sprites.front_default;            
+            nameCard.innerText = `${pokemon.name}`;
+            imgDiv.src = pokemon.sprites.other["official-artwork"].front_default;            
         })
         .catch(e => console.error(new Error(e)))    
 }
@@ -125,14 +129,14 @@ const checkCant = () => {
         btnCatch.disabled = true;
         alert(`Ya capturaste el maximo posible!
         Libera algun pokemon para seguir capturando.`);
-    } else if (checkCantStorage() != 0){        
+    } else if (checkCantStorage() != 0){                
         btnCatch.disabled = false;
         captured = JSON.parse(localStorage.getItem(`pokemonid`));
         
         captured.push({pokemonID});               
         const jsonCaptured = JSON.stringify(captured);
         localStorage.setItem("pokemonid", jsonCaptured);
-        localStorage.setItem("cant", checkCantStorage() + 1 );               
+        localStorage.setItem("cant", checkCantStorage() + 1 );                    
                
     } else {
         btnCatch.disabled = false;
@@ -140,7 +144,7 @@ const checkCant = () => {
         captured.push({pokemonID});               
         const jsonCaptured = JSON.stringify(captured);
         localStorage.setItem("pokemonid", jsonCaptured);
-        localStorage.setItem("cant", checkCantStorage() + 1 );
+        localStorage.setItem("cant", checkCantStorage() + 1 );        
     }
 }
 

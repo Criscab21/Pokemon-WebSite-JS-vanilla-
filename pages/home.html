@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <title>Atrapalos!</title>
 </head>
 <body>
     <header>
-        <h2>Pokemon</h2>
-        <div class="menu">
-            <div class="navigate">
-                <a href="../index.html">Inicio</a>                
-            </div>                        
+        <div class="logo">
+            <img src="../img/pokemon-logo.webp" alt="pokemon-logo">
         </div>
+        
     </header>
-
     <main class="main">
         <main class="main">
-            <div class="show_catched">
-                <button><a href="./pokemon_catched.html">Pokemon atrapados</a></button>
-            </div>
+            
             <div class="container">
                 <button class="search_pokemon">
                     Buscar pokemon
@@ -27,7 +23,7 @@
                 <div class="card">
                     <p class="name"></p>
                     <div class="img_pokemon">
-                        <img class="img" src="" alt="">
+                        <img class="img" src="none" alt="">
                     </div>
                     <button class="catch">
                         Capturar
@@ -36,7 +32,19 @@
             </div>        
         </main>
     </main>
-
+    <div class="menu">
+        <div class="navigate">
+            <ol>
+                <li>
+                    <a href="../index.html">Inicio</a>  
+                </li>
+                <li>
+                    <a href="./pokemon_catched.html">Pokemon atrapados</a>
+                </li>
+            </ol>                             
+        </div>                        
+    </div>
+    
     <script src="../js/main.js"></script>
 </body>
 </html>
