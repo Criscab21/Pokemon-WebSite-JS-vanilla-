@@ -14,16 +14,23 @@ a {
 
 body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 150% 250%;
+    background-size: 150% 350%;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding-inline: 1rem;
+    align-items: center;
 }
 
 .logo {
-    width: 30vw;
-    height: 26vh;
+    width: 300px;
+    height: 150px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-left: 35vw;
+    align-items: center;    
     margin-top: 1%;
 }
 
@@ -50,13 +57,14 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1vw;
-    font-size: 2vw;
+    font-size: 8vw;
 }
 
 main {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 2vh;
     
 }
 
@@ -98,7 +106,6 @@ main {
     height: 100%;
 }
 
-
 .main_catched .pokemon_card{
     border: 0.05vh solid rgb(255, 255, 255);
     text-align: center;
@@ -124,4 +131,102 @@ main {
     max-height: 25vh;
     width: 100%;
     height: 100%;
+}
+
+.menu .navigate ol li p {
+    font-size: 4vh;
+    color: rgb(255, 238, 196);
+}
+
+.all-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media screen and (min-width: 550px) {
+    .all-card {
+        grid-template-columns: 1fr 1fr;
+    }
+    .menu .navigate a{
+        font-size: 7vw;
+    }
+    .logo {
+        width: 500px;
+        height: 350px;
+        padding-left: 5vw;
+    }
+    
+}
+
+@media screen and (min-width: 700px) {
+    .all-card {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .menu .navigate a{
+        font-size: 2vw;
+    }
+    header {
+        height: 30vh;
+    }
+    .logo {        
+        width: 40vw;  
+        height: 30vh;     
+        padding: 0;
+        margin: 0;        
+    }
+}
+
+.pokemon-card {
+    text-align: center;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.338);
+    box-shadow: 0 0 3rem -1rem;
+    padding-block: 1rem;   
+}
+
+.all-card .pkm-img {    
+    padding-inline: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.all-card .pkm-img img {
+    max-width: 15vw;
+    max-height: 25vh;
+    width: 100%;
+    height: 100%;
+}
+
+.main-show-all {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.info {    
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding-inline: 1rem;
+    align-items: center;
+}
+
+.info p {
+    font-size: 3vh;
+}
+
+.nombreid {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.id {
+    background-color: rgba(128, 128, 128, 0.084);
+    padding: .25rem .5rem;
+    border-radius: 100vmax;
+    font-size: black;    
 }

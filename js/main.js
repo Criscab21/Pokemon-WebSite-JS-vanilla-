@@ -7,13 +7,18 @@ const pokemonCatched = document.querySelector(".pokemon_catched");
 const mainCatched = document.querySelector(".main_catched");
 const btnShowCatched = document.querySelector(".show_catched");
 const containerCatched = document.querySelector(".container-catched");
+const btnShowAll = document.querySelector(".show20");
+const all_card = document.querySelector(".all-card");
+const ol_showAll =document.querySelector(".ol-show-all");
+const divBtnNext = document.querySelector(".btn-next");
+const btnNext = document.querySelector(".button-next");
+const mainShowAll = document.querySelector(".main-show-all");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 
 //variables globales
 
 let captured = [];
 let pokemonID;
-
 
 
 const checkCantStorage = () => {
@@ -23,8 +28,8 @@ const checkCantStorage = () => {
         return Number(localStorage.getItem("cant"))}
 }
 
-const deleteAll = () => {
-    const pokemonCard = document.querySelectorAll(".pokemon_card");
+const deleteAll = (name) => {
+    const pokemonCard = document.querySelectorAll(name);
     for (let div of pokemonCard) {
         div.remove();        
     }
@@ -67,7 +72,7 @@ const createCardsCatched = (pokemonData) => {
 
 
 const printCatched = () => {       
-    deleteAll();
+    deleteAll(".pokemon_card");
     const pokemonCaptured = JSON.parse(localStorage.getItem(`pokemonid`));
     if(pokemonCaptured != null) {
         for(let i = 0; i < 6; i++) {               
@@ -86,8 +91,7 @@ const printCatched = () => {
 
 const checkFirstTime = () => {
     const checkQuantity = JSON.parse(localStorage.getItem("cant"));
-    const checkPokemonid = JSON.parse(localStorage.getItem("pokemonid"));
-    console.log(checkPokemonid);
+    const checkPokemonid = JSON.parse(localStorage.getItem("pokemonid"));    
     if(checkQuantity != undefined){
         printCatched();
     } else if(checkPokemonid === null ) {
@@ -113,15 +117,21 @@ const printPokemon = (id) => {
 const randomId = (max) => {
     return Math.floor(Math.random() * max);
 }
- 
-btnSearchPokemon.addEventListener("click", () => {
-    pokemonID = randomId(1010);
-    printPokemon(pokemonID);    
-})
 
-btnCatch.addEventListener("click", () => {
-    checkCant();        
-});    
+if(btnSearchPokemon){
+    btnSearchPokemon.addEventListener("click", () => {
+        pokemonID = randomId(1010);
+        printPokemon(pokemonID);    
+    })
+}
+
+if(btnCatch){
+    btnCatch.addEventListener("click", () => {
+        checkCant();        
+    });   
+}
+
+ 
 
 
 const checkCant = () => {
@@ -131,8 +141,7 @@ const checkCant = () => {
         Libera algun pokemon para seguir capturando.`);
     } else if (checkCantStorage() != 0){                
         btnCatch.disabled = false;
-        captured = JSON.parse(localStorage.getItem(`pokemonid`));
-        
+        captured = JSON.parse(localStorage.getItem(`pokemonid`));        
         captured.push({pokemonID});               
         const jsonCaptured = JSON.stringify(captured);
         localStorage.setItem("pokemonid", jsonCaptured);
@@ -147,5 +156,65 @@ const checkCant = () => {
         localStorage.setItem("cant", checkCantStorage() + 1 );        
     }
 }
+
+//JS donde se muestran todos los pokemon
+
+const checkPag = () => {
+    const pag = Number(localStorage.getItem("pagshow"));
+    return pag;    
+}
+
+const createCard = (data) => {             
+    const div = document.createElement("div");
+    let idpokemon = data.id.toString();
+    if(idpokemon.length === 1) {
+        idpokemon = 0 + 0 + idpokemon;
+    } else if (idpokemon.length === 2) {
+        idpokemon = 0 + idpokemon;
+    } 
+    
+    div.classList = "pokemonShowed";
+    div.innerHTML = `
+        <div class="pokemon-card">                           
+            <div class="info">
+                <div class=nombreid>
+                    <p class="id">#${idpokemon}</p>                     
+                    <p class="name">${data.name}</p>                    
+                </div>                
+            </div>
+            <div class="pkm-img">
+                <img src=${data.sprites.other["official-artwork"].front_default} alt=${data.name}>
+            </div>
+        </div>
+        `
+    all_card.appendChild(div);                    
+}
+
+btnNext.addEventListener("click", () =>{                
+    localStorage.setItem("pagshow", checkPag()+20); 
+    showAll();
+})      
+
+
+const showAll = () => {  
+    all_card.innerHTML = '';          
+    for(let i = (1 + checkPag()); i <= (20 + checkPag()); i ++){
+        fetch(URL + i)
+        .then(res => res.json())
+        .then(data => createCard(data))
+        .catch(e => console.error(new Error(e)))      
+    }
+
+    nextBtn();
+    
+}   
+
+if(btnShowAll){
+    btnShowAll.addEventListener("click", () => {
+        localStorage.setItem("pagshow", 0);
+        showAll();        
+    })
+}
+
 
 
