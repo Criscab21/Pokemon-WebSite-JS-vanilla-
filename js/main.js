@@ -15,6 +15,7 @@ const btnNext = document.querySelector(".button-next");
 const mainShowAll = document.querySelector(".main-show-all");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 
+
 //variables globales
 
 let captured = [];
@@ -36,13 +37,15 @@ const deleteAll = (name) => {
 }
 
 
-const whichDelete = (id) => {
+
+const whichDelete = (id) => {    
     const pokemonCaptured = JSON.parse(localStorage.getItem(`pokemonid`))  
     for ( let i = 0; i < pokemonCaptured.length ; i++) {                
         if(pokemonCaptured[i].pokemonID === id) {            
             pokemonCaptured.splice(i, 1);
             const jsonCaptured = JSON.stringify(pokemonCaptured);
-            localStorage.setItem("pokemonid", jsonCaptured);
+            localStorage.setItem("pokemonid", jsonCaptured);            
+            break;
         } 
     }
 } 
@@ -59,6 +62,7 @@ const createCardsCatched = (pokemonData) => {
     buttonDelete.addEventListener("click", () => {
         localStorage.setItem("cant", checkCantStorage() - 1)                 
         whichDelete(pokemonData.id);
+        Swal.fire("Liberado!", `liberaste a ${pokemonData.name}, lo extrañaremos!`, "warning");               
         printCatched();
     })                
     p.innerHTML = `${pokemonData.name}`;                
@@ -131,29 +135,27 @@ if(btnCatch){
     });   
 }
 
- 
-
-
-const checkCant = () => {
+const checkCant = () => {    
     if(checkCantStorage() === 6) {
         btnCatch.disabled = true;
-        alert(`Ya capturaste el maximo posible!
-        Libera algun pokemon para seguir capturando.`);
-    } else if (checkCantStorage() != 0){                
+        Swal.fire("Llegaste al maximo", "para seguir capturando, prueba a liberar uno en pokemon atrapados", "warning")
+    } else if (checkCantStorage() > 0 && checkCantStorage() < 6){                
         btnCatch.disabled = false;
         captured = JSON.parse(localStorage.getItem(`pokemonid`));        
         captured.push({pokemonID});               
         const jsonCaptured = JSON.stringify(captured);
         localStorage.setItem("pokemonid", jsonCaptured);
-        localStorage.setItem("cant", checkCantStorage() + 1 );                    
-               
+        localStorage.setItem("cant", checkCantStorage() + 1 );
+        Swal.fire("Capturado!", "para ver todos sus pokemon, ingrese en pokemon atrapados", "success");               
     } else {
         btnCatch.disabled = false;
-        localStorage.setItem("pokemonid", 0);                
+        localStorage.setItem("pokemonid", 0);
+        localStorage.setItem("cant", 0);                
         captured.push({pokemonID});               
         const jsonCaptured = JSON.stringify(captured);
         localStorage.setItem("pokemonid", jsonCaptured);
-        localStorage.setItem("cant", checkCantStorage() + 1 );        
+        localStorage.setItem("cant", checkCantStorage() + 1 );
+        Swal.fire("Capturado!", "para ver todos sus pokemon, ingrese en pokemon atrapados", "success");    
     }
 }
 
@@ -218,5 +220,7 @@ if(btnShowAll){
 
 /// MODO OSCURO 
 
+
+/// sweetAlert2
 
 
