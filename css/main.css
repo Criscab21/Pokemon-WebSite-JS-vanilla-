@@ -110,10 +110,13 @@ main {
     border: 0.05vh solid rgb(255, 255, 255);
     text-align: center;
     min-width: 20vw;
-    min-height: 25vh;
+    min-height: 25vh;           
     display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding-inline: 1rem;
     align-items: center;
-    justify-content: center;
+    padding-block: 1rem;
 }
 
 .main_catched .pokemon_card p {
@@ -235,3 +238,32 @@ main {
     border-radius: 100vmax;
     font-size: black;    
 }
+
+
+/* Slider index */
+
+
+.body-class {            
+    text-align: center;    
+}
+
+.mySwiper{    
+}
+
+.swiper {
+    width: 30vw;
+    height: 25vh;
+}
+
+.swiper-slide {    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {      
+    width: 20vw;
+    height: 25vh;   
+    filter:brightness(0.01);   
+}
+

@@ -192,10 +192,14 @@ const createCard = (data) => {
     all_card.appendChild(div);                    
 }
 
-btnNext.addEventListener("click", () =>{                
-    localStorage.setItem("pagshow", checkPag()+20); 
-    showAll();
-})      
+if(btnNext) {
+    btnNext.addEventListener("click", () =>{                
+        localStorage.setItem("pagshow", checkPag()+20); 
+        showAll();
+    })  
+}
+
+    
 
 
 const showAll = () => {  
@@ -221,6 +225,38 @@ if(btnShowAll){
 /// MODO OSCURO 
 
 
-/// sweetAlert2
+/// Slider 
 
+const swiper = new Swiper(".mySwiper", {
+    spaceBetween: 30,
+    centeredSlides: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: true,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+});
 
+const changeImgSwiper = () => {        
+    for(let i = 0; i < 9 ; i ++) {
+        id = randomId(1010);        
+        fetch(URL + id)
+        .then(res => res.json())
+        .then(data => {                                                                     
+            const swiperSlide = document.querySelector(`#swip${i}`);
+            const img = document.createElement("img");
+            img.src = data.sprites.other["official-artwork"].front_default;
+            swiperSlide.appendChild(img);                           
+        })
+        .catch(e => console.error(new Error(e)))    
+    }                            
+}
+
+changeImgSwiper();
